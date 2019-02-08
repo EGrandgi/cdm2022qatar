@@ -47,9 +47,6 @@ def get_articles_urls():
 urls_list = get_articles_urls()
 
 
-url = urls_list[4]
-soup = create_soup(url)
-
 # =============================================================================
 #                   Get urls for a specific search - L'EQUIPE
 # =============================================================================
@@ -71,9 +68,6 @@ def get_articles_urls():
     
 urls_list = get_articles_urls()
 
-
-url = urls_list[4]
-soup = create_soup(url)
 
 # =============================================================================
 #                   Get urls for a specific search - L'EXPRESS
@@ -99,9 +93,6 @@ def get_articles_urls():
 urls_list = get_articles_urls()
 
 
-url = urls_list[4]
-soup = create_soup(url)
-
 # =============================================================================
 #                   Get urls for a specific search - 20 MINUTES
 # =============================================================================
@@ -124,9 +115,5 @@ def get_articles_urls():
     return(urls_list)
     
 urls_list = get_articles_urls()
-
-
-url = urls_list[4]
-soup = create_soup(url)
 
     
