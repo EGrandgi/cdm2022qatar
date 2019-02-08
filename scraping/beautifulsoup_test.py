@@ -13,6 +13,7 @@ https://code.tutsplus.com/fr/tutorials/scraping-webpages-in-python-with-beautifu
 
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 # =============================================================================
@@ -33,7 +34,7 @@ def create_soup(url):
 def get_articles_urls():
     urls_list = []
 
-    for i in range(1, 40):
+    for i in range(1, 2):
         url_search = 'https://www.lemonde.fr/recherche/?keywords=coupe+du+monde+2022+qatar&page_num=' + str(i) +'&operator=and&exclude_keywords=&qt=recherche_texte_titre&author=&period=since_1944&start_day=01&start_month=01&start_year=1944&end_day=29&end_month=01&end_year=2019&sort=desc'
         soup = create_soup(url_search)
     
@@ -46,77 +47,41 @@ def get_articles_urls():
     
 urls_list = get_articles_urls()
 
-
-url = urls_list[4]
-soup = create_soup(url)
-
-
-# =============================================================================
-#                   Get urls for a specific search - 20 MINUTES
-# =============================================================================
-
-
-# (pas fini)
-
-def get_articles_urls():
-    urls_list = []
-
-    for i in range(1, 6):
-        url_search = 'https://www.20minutes.fr/search?q=coupe+du+monde+2022+qatar'
-        soup = create_soup(url_search)
-    
-        for div in soup.find_all('div'):
-            for class in div.find_all('div')
-            url = 'https://www.20minutes.fr' + class.get("gsc-url-top")
-            urls_list.append(url)
-                
-    return(urls_list)
-    
-urls_list = get_articles_urls()
-
-
-url = urls_list[4]
-soup = create_soup(url)
-
                 
 # =============================================================================
-#                        Get the articles' content
+#                     Get the articles' content - LE MONDE
 # =============================================================================
-   
-# (test) 
-  
-url = urls_list[4]
-soup = create_soup(url)
-title = soup.find('title').string
-newspaper = "Le Monde"
 
-           
-def get_content_articles():
+def get_articles_content():
     
     for url in urls_list:
         soup = create_soup(url)
+        source = "Le Monde"
         
-        source = "LeMonde.fr"
+        #title
         title = soup.find('title').string
-#        date
-#        category
-#        author
         
-#        content
-        content = ""
+        #subtitle
         for main in soup.find_all('main'):
             for p in main.find_all('p'):
-                if p.get("class") == ['article__status']:
-                    print("nothing")
-                else:
-                    print(p)
+                if p.get("class") != ['article__status']:
+                    if p.get("class") == ['article__desc']:
+                        subtitle = p
                     
-    return(source, title, date, category, author, content)
+        return(source, url, title, subtitle)
         
-    
-# =============================================================================
-#                        Store info in json files
-# =============================================================================
-    
-def create_json_file():
-    
+        
+
+data = get_articles_content()
+
+
+
+
+article_content = { "source": source,
+                    "url": url,
+#                    "author": author,
+#                    "date": date,
+#                    "category": category,
+                    "title": title,
+                    "subtitle": subtitle}
+#                    "content": content }
