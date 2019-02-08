@@ -13,7 +13,6 @@ https://code.tutsplus.com/fr/tutorials/scraping-webpages-in-python-with-beautifu
 
 from bs4 import BeautifulSoup
 import requests
-import re
 
 
 # =============================================================================
@@ -34,7 +33,7 @@ def create_soup(url):
 def get_articles_urls():
     urls_list = []
 
-    for i in range(1, 2):
+    for i in range(1, 40):
         url_search = 'https://www.lemonde.fr/recherche/?keywords=coupe+du+monde+2022+qatar&page_num=' + str(i) +'&operator=and&exclude_keywords=&qt=recherche_texte_titre&author=&period=since_1944&start_day=01&start_month=01&start_year=1944&end_day=29&end_month=01&end_year=2019&sort=desc'
         soup = create_soup(url_search)
     
