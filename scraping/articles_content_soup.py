@@ -100,13 +100,13 @@ def get_1_article_content(url):
         title = ""
         title = soup.find('title').string
         
-        #subtitle - A MODIFIER y a des choses en trop
+        #subtitle
         subtitle = ""
         for main in soup.find_all('main'):
             for p in main.find_all('p'):
                 if p.get("class") != ['article__status']:
                     if p.get("class") == ['article__desc']:
-                        subtitle = p
+                        subtitle = p.get_text()
                         
         #content - A MODIFIER y a des choses en trop
         content = ""
