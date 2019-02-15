@@ -8,7 +8,7 @@ https://code.tutsplus.com/fr/tutorials/scraping-webpages-in-python-with-beautifu
 """
 
 # =============================================================================
-#                                   Packages
+#                                 Packages
 # =============================================================================
 
 from bs4 import BeautifulSoup
@@ -16,10 +16,16 @@ import requests
 
 
 # =============================================================================
-#                                Create soup
+#                     Récupération du code soyrce d'une page
 # =============================================================================
 
 def create_soup(url):
+    
+    """ 
+        Prend en entrée l'url d'une page web
+        Retourne son code source  
+    """
+    
     req = requests.get(url)
     data = req.text
     soup = BeautifulSoup(data, "lxml")
@@ -27,10 +33,16 @@ def create_soup(url):
 
 
 # =============================================================================
-#                   Get urls for a specific search - LE MONDE
+#             Récupération des URLs d'une recherche sur un site web
 # =============================================================================
 
 def get_articles_urls():
+    
+    """ 
+        Retourne une liste d'urls d'articles correspondant à la recherche 
+        "coupe du monde 2022 qatar" sur le site "Le Monde"   
+    """
+    
     urls_list = []
 
     for i in range(1, 5): #40 pages
@@ -44,16 +56,23 @@ def get_articles_urls():
                 
     return(urls_list)
     
-
+    
+#☻Exécution
 urls_list = get_articles_urls()
     
 
 # =============================================================================
-#                     Get 1 article's content - LE MONDE
+#                       Récupération du contenu des articles
 # =============================================================================
 
 def get_1_article_content(url):
     
+    """ 
+        Prend en entrée l'url d'un article
+        Retourne un dictionnaire contenant : 
+            source, url, date, thème, titre, sous-titre, contenu    
+    """
+    
     url_ = url
     soup = create_soup(url)
     source = "Le Monde"
@@ -90,67 +109,37 @@ def get_1_article_content(url):
                 if article.get("class") == ['article article--single article--iso']:
                     article.string = ""
             content += article.get_text() + " "
+            
+    #dictionary        
+    article_content = {"source": source,
+                       "url": url_,
+                       "date": date,
+                       "theme": theme,
+                       "title": title,
+                       "subtitle": subtitle,
+                       "content": content}
+
           
-    return(source, url_, date, theme, title, subtitle, content)
+    return(article_content)
         
 
-#test with 1 article
-url = urls_list[8]
-source, url_, date, theme, title, subtitle, content = get_1_article_content(url)
-
-
-#dictionary
-article_content = {"source": source,
-                   "url": url_,
-                   "date": date,
-                   "theme": theme,
-                   "title": title,
-                   "subtitle": subtitle,
-                   "content": content}
-
-                
-# =============================================================================
-#                     Get the articles' content - LE MONDE
-# =============================================================================
-
-def get_articles_content():
+def list_articles_content(urls_list):
     
-    url_ = url
-    soup = create_soup(url)
-    source = "Le Monde"
+    """ 
+        Prend en paramètre une liste d'urls d'articles
+        Retourne une liste contenant un dictionnaire par article,
+        chaque dictionnaire contenant : 
+            source, url, date, thème, titre, sous-titre, contenu    
+    """
     
-    #date
-    i = 0
-    while i<100:
-        if url[i].isdigit() == True:
-            break
-        i += 1
-    date = url[i:i+10]
+    all_articles = []
     
-    #theme
-    for li in soup.find_all('li'):
-        if li.get("class") == ['breadcrumb__parent']:
-            for a in li.find_all('a'):
-                theme = a.get_text()
+    for url in urls_list:
+        all_articles.append(get_1_article_content(url))
         
-    #title
-    title = soup.find('title').string
-    
-    #subtitle
-    for main in soup.find_all('main'):
-        for p in main.find_all('p'):
-            if p.get("class") != ['article__status']:
-                if p.get("class") == ['article__desc']:
-                    subtitle = p
-                    
-    #content
-    content = ""
-    for body in soup.find_all('body'):
-        if body.get("id") == 'js-body':
-            for article in body.find_all('article'):
-                if article.get("class") == ['article article--single article--iso']:
-                    article.string = ""
-            content += article.get_text() + " "
-                    
-    return(source, url_, date, theme, title, subtitle, content)
+    return(all_articles)
         
+
+#Exécution
+all_articles = list_articles_content(urls_list)
+    
