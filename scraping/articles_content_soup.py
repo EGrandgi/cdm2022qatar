@@ -44,8 +44,9 @@ def get_articles_urls():
                 
     return(urls_list)
     
-urls_list = get_articles_urls()
 
+urls_list = get_articles_urls()
+    
 
 # =============================================================================
 #                     Get 1 article's content - LE MONDE
@@ -57,6 +58,20 @@ def get_1_article_content(url):
     soup = create_soup(url)
     source = "Le Monde"
     
+    #date
+    i = 0
+    while i<100:
+        if url[i].isdigit() == True:
+            break
+        i += 1
+    date = url[i:i+10]
+    
+    #theme
+    for li in soup.find_all('li'):
+        if li.get("class") == ['breadcrumb__parent']:
+            for a in li.find_all('a'):
+                theme = a.get_text()
+        
     #title
     title = soup.find('title').string
     
@@ -75,19 +90,20 @@ def get_1_article_content(url):
                 if article.get("class") == ['article article--single article--iso']:
                     article.string = ""
             content += article.get_text() + " "
-    
-    #MANQUE: date, author, theme
-    return(source, url_, title, subtitle, content)
+          
+    return(source, url_, date, theme, title, subtitle, content)
         
 
 #test with 1 article
 url = urls_list[8]
-source, url_, title, subtitle, content = get_1_article_content(url)
+source, url_, date, theme, title, subtitle, content = get_1_article_content(url)
 
 
 #dictionary
 article_content = {"source": source,
                    "url": url_,
+                   "date": date,
+                   "theme": theme,
                    "title": title,
                    "subtitle": subtitle,
                    "content": content}
@@ -99,30 +115,42 @@ article_content = {"source": source,
 
 def get_articles_content():
     
-    for url in urls_list:
-        url_ = url
-        soup = create_soup(url)
-        source = "Le Monde"
+    url_ = url
+    soup = create_soup(url)
+    source = "Le Monde"
+    
+    #date
+    i = 0
+    while i<100:
+        if url[i].isdigit() == True:
+            break
+        i += 1
+    date = url[i:i+10]
+    
+    #theme
+    for li in soup.find_all('li'):
+        if li.get("class") == ['breadcrumb__parent']:
+            for a in li.find_all('a'):
+                theme = a.get_text()
         
-        #title
-        title = soup.find('title').string
-        
-        #subtitle
-        for main in soup.find_all('main'):
-            for p in main.find_all('p'):
-                if p.get("class") != ['article__status']:
-                    if p.get("class") == ['article__desc']:
-                        subtitle = p
-                        
-        #content
-        content = ""
-        for body in soup.find_all('body'):
-            if body.get("id") == 'js-body':
-                for article in body.find_all('article'):
-                    if article.get("class") == ['article article--single article--iso']:
-                        article.string = ""
-                content += article.get_text() + " "
+    #title
+    title = soup.find('title').string
+    
+    #subtitle
+    for main in soup.find_all('main'):
+        for p in main.find_all('p'):
+            if p.get("class") != ['article__status']:
+                if p.get("class") == ['article__desc']:
+                    subtitle = p
                     
-        return(source, url_, title, subtitle, content)
+    #content
+    content = ""
+    for body in soup.find_all('body'):
+        if body.get("id") == 'js-body':
+            for article in body.find_all('article'):
+                if article.get("class") == ['article article--single article--iso']:
+                    article.string = ""
+            content += article.get_text() + " "
+                    
+    return(source, url_, date, theme, title, subtitle, content)
         
-
