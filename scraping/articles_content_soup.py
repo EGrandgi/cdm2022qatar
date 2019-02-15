@@ -13,6 +13,11 @@ https://code.tutsplus.com/fr/tutorials/scraping-webpages-in-python-with-beautifu
 
 from bs4 import BeautifulSoup
 import requests
+import pandas as pd
+import os
+import datetime
+import json
+import time
 
 
 # =============================================================================
@@ -36,16 +41,18 @@ def create_soup(url):
 #             Récupération des URLs d'une recherche sur un site web
 # =============================================================================
 
-def get_articles_urls():
+def get_articles_urls(nb):
     
     """ 
+        Prend en entrée le nombre de pages de recherches
         Retourne une liste d'urls d'articles correspondant à la recherche 
         "coupe du monde 2022 qatar" sur le site "Le Monde"   
+        
     """
     
     urls_list = []
 
-    for i in range(1, 5): #range(1, 40) --> 400 articles
+    for i in range(1, nb+1): #40 pages
         url_search = 'https://www.lemonde.fr/recherche/?keywords=coupe+du+monde+2022+qatar&page_num=' + str(i) +'&operator=and&exclude_keywords=&qt=recherche_texte_titre&author=&period=since_1944&start_day=01&start_month=01&start_year=1944&end_day=29&end_month=01&end_year=2019&sort=desc'
         soup = create_soup(url_search)
     
@@ -55,10 +62,6 @@ def get_articles_urls():
                 urls_list.append(url)
                 
     return(urls_list)
-    
-    
-#☻Exécution
-urls_list = get_articles_urls()
     
 
 # =============================================================================
@@ -78,6 +81,7 @@ def get_1_article_content(url):
     source = "Le Monde"
     
     #date
+    date = ""
     i = 0
     while i<100:
         if url[i].isdigit() == True:
@@ -86,22 +90,25 @@ def get_1_article_content(url):
     date = url[i:i+10]
     
     #theme
+    theme = ""
     for li in soup.find_all('li'):
         if li.get("class") == ['breadcrumb__parent']:
             for a in li.find_all('a'):
                 theme = a.get_text()
         
     #title
+    title = ""
     title = soup.find('title').string
     
     #subtitle
+    subtitle = ""
     for main in soup.find_all('main'):
         for p in main.find_all('p'):
             if p.get("class") != ['article__status']:
                 if p.get("class") == ['article__desc']:
                     subtitle = p
                     
-    #content - A MODIFIER y a des choses en trop
+    #content
     content = ""
     for body in soup.find_all('body'):
         if body.get("id") == 'js-body':
@@ -110,38 +117,59 @@ def get_1_article_content(url):
                     article.string = ""
             content += article.get_text() + " "
             
-    #dictionary        
-    article_content = {"source": source,
-                       "url": url_,
-                       "date": date,
-                       "theme": theme,
-                       "title": title,
-                       "subtitle": subtitle,
-                       "content": content}
+    return(str(source), str(url_), str(date), str(theme), str(title), str(subtitle), str(content))
+               
 
-          
-    return(article_content)
-        
 
 def list_articles_content(urls_list):
     
     """ 
-        Prend en paramètre une liste d'urls d'articles
-        Retourne une liste contenant un dictionnaire par article,
-        chaque dictionnaire contenant : 
+        Prend en entrée une liste d'urls d'articles
+        avec en colonnes : 
             source, url, date, thème, titre, sous-titre, contenu    
     """
     
-    all_articles = []
+    df = pd.DataFrame(columns=['source', 'url', 'date','theme', 'title','subtitle','content'])
     
     for url in urls_list:
-        all_articles.append(get_1_article_content(url))
-        
-    return(all_articles)
-        
+        s, u, d, t, ti, su, c = get_1_article_content(url)
+        i = df.shape[0]
+        df.loc[i+1] = [s, u, d, t, ti, su, c]
 
-#Exécution
-all_articles = list_articles_content(urls_list)
-
-#A FAIRE: fonction pour convertir la liste de dictionnaires en fichier json(?)
+    return(df)
     
+    
+# =============================================================================
+#                              Sauvegarde en json
+# =============================================================================
+
+def save_as_json(data, path, filename):
+
+    """
+        Prend en entrée un dictionnaire
+        Crée un fichier json avec le contenu du dictionnaire
+        
+    """
+    
+    with open('{}\\data\\{}.json'.format(path, filename), 'w') as outfile:
+        outfile.write(json.dumps(data, ensure_ascii = True, indent = 4))
+
+
+
+# =============================================================================
+#                             Exécution des fonctions
+# =============================================================================
+    
+tps_s = time.perf_counter()
+
+urls_list = get_articles_urls(4) #récupération des urls des articles (4 pages de recherche)
+df = list_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
+all_articles_dict = df.to_dict() #création d'un dictionnaire à partir du dataframe
+
+path = os.getcwd()
+now = datetime.datetime.now().isoformat()
+filename = "all_articles_" + now[:10]
+save_as_json(all_articles_dict, path, filename) #sauvegarde en json du contenu des articles
+
+tps_e = time.perf_counter()
+print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
