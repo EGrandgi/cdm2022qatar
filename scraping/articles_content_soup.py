@@ -80,46 +80,49 @@ def get_1_article_content(url):
     soup = create_soup(url)
     source = "Le Monde"
     
-    #date
-    date = ""
-    i = 0
-    while i<100:
-        if url[i].isdigit() == True:
-            break
-        i += 1
-    date = url[i:i+10]
-    
-    #theme
-    theme = ""
-    for li in soup.find_all('li'):
-        if li.get("class") == ['breadcrumb__parent']:
-            for a in li.find_all('a'):
-                theme = a.get_text()
+    try:
+        #date
+        date = ""
+        i = 0
+        while i<100:
+            if url[i].isdigit() == True:
+                break
+            i += 1
+        date = url[i:i+10]
         
-    #title
-    title = ""
-    title = soup.find('title').string
-    
-    #subtitle
-    subtitle = ""
-    for main in soup.find_all('main'):
-        for p in main.find_all('p'):
-            if p.get("class") != ['article__status']:
-                if p.get("class") == ['article__desc']:
-                    subtitle = p
-                    
-    #content
-    content = ""
-    for body in soup.find_all('body'):
-        if body.get("id") == 'js-body':
-            for article in body.find_all('article'):
-                if article.get("class") == ['article article--single article--iso']:
-                    article.string = ""
-            content += article.get_text() + " "
+        #theme
+        theme = ""
+        for li in soup.find_all('li'):
+            if li.get("class") == ['breadcrumb__parent']:
+                for a in li.find_all('a'):
+                    theme = a.get_text()
+            
+        #title
+        title = ""
+        title = soup.find('title').string
+        
+        #subtitle - A MODIFIER y a des choses en trop
+        subtitle = ""
+        for main in soup.find_all('main'):
+            for p in main.find_all('p'):
+                if p.get("class") != ['article__status']:
+                    if p.get("class") == ['article__desc']:
+                        subtitle = p
+                        
+        #content - A MODIFIER y a des choses en trop
+        content = ""
+        for body in soup.find_all('body'):
+            if body.get("id") == 'js-body':
+                for article in body.find_all('article'):
+                    if article.get("class") == ['article article--single article--iso']:
+                        article.string = ""
+                content += article.get_text() + " "
+                
+    except:
+        print("Exception : " + url_+ "\n")
             
     return(str(source), str(url_), str(date), str(theme), str(title), str(subtitle), str(content))
                
-
 
 def list_articles_content(urls_list):
     
@@ -155,21 +158,21 @@ def save_as_json(data, path, filename):
         outfile.write(json.dumps(data, ensure_ascii = True, indent = 4))
 
 
-
 # =============================================================================
 #                             Exécution des fonctions
 # =============================================================================
+
+if __name__ == '__main__':
+    tps_s = time.perf_counter()
     
-tps_s = time.perf_counter()
-
-urls_list = get_articles_urls(4) #récupération des urls des articles (4 pages de recherche)
-df = list_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
-all_articles_dict = df.to_dict() #création d'un dictionnaire à partir du dataframe
-
-path = os.getcwd()
-now = datetime.datetime.now().isoformat()
-filename = "all_articles_" + now[:10]
-save_as_json(all_articles_dict, path, filename) #sauvegarde en json du contenu des articles
-
-tps_e = time.perf_counter()
-print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
+    urls_list = get_articles_urls(20) #récupération des urls des articles (20 pages de recherche)
+    df = list_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
+    all_articles_dict = df.to_dict() #création d'un dictionnaire à partir du dataframe
+    
+    path = os.getcwd()
+    now = datetime.datetime.now().isoformat()
+    filename = "all_articles_" + now[:10]
+    save_as_json(all_articles_dict, path, filename) #sauvegarde en json du contenu des articles
+    
+    tps_e = time.perf_counter()
+    print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
