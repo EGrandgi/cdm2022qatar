@@ -72,8 +72,7 @@ def get_1_article_content(url):
     
     """ 
         Prend en entrée l'url d'un article
-        Retourne un dictionnaire contenant : 
-            source, url, date, thème, titre, sous-titre, contenu    
+        Retourne : source, url, date, thème, titre, sous-titre, contenu    
     """
     
     url_ = url
