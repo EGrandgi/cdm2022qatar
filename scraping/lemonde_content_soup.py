@@ -2,8 +2,6 @@
 """
 Created on Thu Jan 31 12:09:27 2019
 
-https://code.tutsplus.com/fr/tutorials/scraping-webpages-in-python-with-beautiful-soup-the-basics--cms-28211
-
 @author: EGrandgi
 """
 
@@ -29,6 +27,7 @@ def create_soup(url):
     """ 
         Prend en entrée l'url d'une page web
         Retourne son code source  
+        
     """
     
     req = requests.get(url)
@@ -72,15 +71,16 @@ def get_1_article_content(url):
     
     """ 
         Prend en entrée l'url d'un article
-        Retourne : source, url, date, thème, titre, sous-titre, contenu    
+        Retourne : source, url, date, thème, titre, sous-titre, contenu , abo, type de contenu   
+    
     """
     
     soup = create_soup(url)
     source = "Le Monde"
-    
+    date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "", "article"
+   
     try:
         #date
-        date = ""
         i = 0
         while i<100:
             if url[i].isdigit() == True:
@@ -89,37 +89,34 @@ def get_1_article_content(url):
         date = url[i:i+10]
         
         #theme
-        theme = ""
         for ul in soup.find_all('ul'):
             if ul.get("class") == ['breadcrumb']:
                 for a in ul.find_all('a'):
-                    theme += a.get_text()
+                    theme += a.get_text() + ","
             
         #title
-        title = ""
         title = soup.find('title').get_text()
         
         #subtitle
-        subtitle = ""
         for p in soup.find_all('p'):
             if p.get("class") == ['article__desc']:
                 subtitle = p.get_text()
                         
         #content & abo
-        content = ""
-        abo = ""
         for section in soup.find_all('section', class_ = ['article__content', 'old__article-content-single']):
             for p in section.find_all('p'):
                 if p.get("class") == ['article__status']:
-                    abo += p.get_text()
+                    abo += "oui"
                 if p.span is None:
                     content += p.get_text() + " "
+        if abo == "":
+            abo = "non"
                     
                                        
     except:
         print("Exception : " + url+ "\n")
             
-    return(str(source), str(url), str(date), str(theme), str(title), str(subtitle), str(content), str(abo))
+    return(str(source), str(url), str(date), str(theme), str(title), str(subtitle), str(content), str(abo), str(content_type))
                
 
 def df_articles_content(urls_list):
@@ -127,15 +124,16 @@ def df_articles_content(urls_list):
     """ 
         Prend en entrée une liste d'urls d'articles
         avec en colonnes : 
-            source, url, date, thème, titre, sous-titre, contenu    
+            source, url, date, thème, titre, sous-titre, contenu, abo, type de contenu  
+    
     """
     
-    df = pd.DataFrame(columns=['source', 'url', 'date','theme', 'title','subtitle','content', 'abo'])
+    df = pd.DataFrame(columns=['source', 'url', 'date','theme', 'title','subtitle','content', 'abo', 'content_type'])
     
     for url in urls_list:
-        s, u, d, t, ti, su, c, a = get_1_article_content(url)
+        s, u, d, t, ti, su, c, a, ct = get_1_article_content(url)
         i = df.shape[0]
-        df.loc[i+1] = [s, u, d, t, ti, su, c, a]
+        df.loc[i+1] = [s, u, d, t, ti, su, c, a, ct]
 
     return(df)
     
@@ -165,12 +163,12 @@ def save_as_json(df, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(5) #récupération des urls des articles (40 pages de recherche)
+    urls_list = get_articles_urls(5) #récupération des urls des articles
     df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
     now = datetime.datetime.now().isoformat()
-    filename = "all_articles_" + now[:10]
+    filename = now[:10] + "_all_articles_lemonde"
     save_as_json(df, path, filename) #sauvegarde en json du contenu des articles
     
     tps_e = time.perf_counter()
