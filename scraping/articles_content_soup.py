@@ -122,7 +122,7 @@ def get_1_article_content(url):
     return(str(source), str(url), str(date), str(theme), str(title), str(subtitle), str(content), str(abo))
                
 
-def list_articles_content(urls_list):
+def df_articles_content(urls_list):
     
     """ 
         Prend en entrée une liste d'urls d'articles
@@ -144,13 +144,15 @@ def list_articles_content(urls_list):
 #                              Sauvegarde en json
 # =============================================================================
 
-def save_as_json(data, path, filename):
+def save_as_json(df, path, filename):
 
     """
-        Prend en entrée un dictionnaire
-        Crée un fichier json avec le contenu du dictionnaire
+        Prend en entrée un dataframe
+        Crée un fichier json avec le contenu du dataframe
          
     """
+    
+    data = df.to_dict()
     
     with open('{}\\data\\{}.json'.format(path, filename), 'w') as outfile:
         outfile.write(json.dumps(data, ensure_ascii = True, indent = 4))
@@ -164,13 +166,12 @@ if __name__ == '__main__':
     tps_s = time.perf_counter()
     
     urls_list = get_articles_urls(5) #récupération des urls des articles (40 pages de recherche)
-    df = list_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
-    all_articles_dict = df.to_dict() #création d'un dictionnaire à partir du dataframe
+    df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
     now = datetime.datetime.now().isoformat()
     filename = "all_articles_" + now[:10]
-    save_as_json(all_articles_dict, path, filename) #sauvegarde en json du contenu des articles
+    save_as_json(df, path, filename) #sauvegarde en json du contenu des articles
     
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
