@@ -44,7 +44,7 @@ def create_soup(url):
 def get_articles_urls(nb):
     
     """ 
-        Prend en entrée le nombre de pages de recherches
+        Prend en entrée le nombre de pages de recherche
         Retourne une liste d'urls d'articles correspondant à la recherche 
         "coupe du monde 2022 qatar" sur le site "Le Monde"   
         
@@ -75,7 +75,6 @@ def get_1_article_content(url):
         Retourne : source, url, date, thème, titre, sous-titre, contenu    
     """
     
-    url_ = url
     soup = create_soup(url)
     source = "Le Monde"
     
@@ -91,36 +90,36 @@ def get_1_article_content(url):
         
         #theme
         theme = ""
-        for li in soup.find_all('li'):
-            if li.get("class") == ['breadcrumb__parent']:
-                for a in li.find_all('a'):
-                    theme = a.get_text()
+        for ul in soup.find_all('ul'):
+            if ul.get("class") == ['breadcrumb']:
+                for a in ul.find_all('a'):
+                    theme += a.get_text()
             
         #title
         title = ""
-        title = soup.find('title').string
+        title = soup.find('title').get_text()
         
         #subtitle
         subtitle = ""
-        for main in soup.find_all('main'):
-            for p in main.find_all('p'):
-                if p.get("class") != ['article__status']:
-                    if p.get("class") == ['article__desc']:
-                        subtitle = p.get_text()
+        for p in soup.find_all('p'):
+            if p.get("class") == ['article__desc']:
+                subtitle = p.get_text()
                         
-        #content - A MODIFIER y a des choses en trop
+        #content & abo
         content = ""
-        for body in soup.find_all('body'):
-            if body.get("id") == 'js-body':
-                for article in body.find_all('article'):
-                    if article.get("class") == ['article article--single article--iso']:
-                        article.string = ""
-                content += article.get_text() + " "
-                
+        abo = ""
+        for section in soup.find_all('section', class_ = ['article__content', 'old__article-content-single']):
+            for p in section.find_all('p'):
+                if p.get("class") == ['article__status']:
+                    abo += p.get_text()
+                if p.span is None:
+                    content += p.get_text() + " "
+                    
+                                       
     except:
-        print("Exception : " + url_+ "\n")
+        print("Exception : " + url+ "\n")
             
-    return(str(source), str(url_), str(date), str(theme), str(title), str(subtitle), str(content))
+    return(str(source), str(url), str(date), str(theme), str(title), str(subtitle), str(content), str(abo))
                
 
 def list_articles_content(urls_list):
@@ -131,12 +130,12 @@ def list_articles_content(urls_list):
             source, url, date, thème, titre, sous-titre, contenu    
     """
     
-    df = pd.DataFrame(columns=['source', 'url', 'date','theme', 'title','subtitle','content'])
+    df = pd.DataFrame(columns=['source', 'url', 'date','theme', 'title','subtitle','content', 'abo'])
     
     for url in urls_list:
-        s, u, d, t, ti, su, c = get_1_article_content(url)
+        s, u, d, t, ti, su, c, a = get_1_article_content(url)
         i = df.shape[0]
-        df.loc[i+1] = [s, u, d, t, ti, su, c]
+        df.loc[i+1] = [s, u, d, t, ti, su, c, a]
 
     return(df)
     
@@ -150,7 +149,7 @@ def save_as_json(data, path, filename):
     """
         Prend en entrée un dictionnaire
         Crée un fichier json avec le contenu du dictionnaire
-        
+         
     """
     
     with open('{}\\data\\{}.json'.format(path, filename), 'w') as outfile:
@@ -164,7 +163,7 @@ def save_as_json(data, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(20) #récupération des urls des articles (20 pages de recherche)
+    urls_list = get_articles_urls(5) #récupération des urls des articles (40 pages de recherche)
     df = list_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     all_articles_dict = df.to_dict() #création d'un dictionnaire à partir du dataframe
     
