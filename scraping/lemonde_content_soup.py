@@ -19,7 +19,7 @@ import time
 
 
 # =============================================================================
-#                     Récupération du code soyrce d'une page
+#                     Récupération du code source d'une page
 # =============================================================================
 
 def create_soup(url):
