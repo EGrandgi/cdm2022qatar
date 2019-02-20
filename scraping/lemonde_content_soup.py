@@ -47,7 +47,7 @@ def get_articles_urls(nb):
     """ 
         Prend en entrée le nombre de pages de recherche
         Retourne une liste d'urls d'articles correspondant à la recherche 
-        "coupe du monde 2022 qatar" sur le site "Le Monde"   
+        "coupe du monde 2022 qatar" sur le site "Le Monde"  
         tri par pertinence
         
     """
@@ -166,7 +166,7 @@ def save_as_json(df, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(5) #récupération des urls des articles
+    urls_list = get_articles_urls(42) #récupération des urls des articles
     df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
