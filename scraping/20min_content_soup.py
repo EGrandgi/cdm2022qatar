@@ -103,12 +103,7 @@ def get_1_article_content(url):
            if p.find_parent('blockquote', class_ = "twitter-tweet") is None:
                content += p.get_text() + " "
         
-        #abo TO DO        
-#        if soup.find('aside', id = 'article-reserve-aux-abonnes') is None:
-#            abo = 'non'
-#        else:
-#            abo = 'oui'
-                    
+        
     except:
         print("Exception : " + url+ "\n")
             
@@ -129,7 +124,8 @@ def df_articles_content(urls_list):
     for url in urls_list:
         s, u, d, t, ti, su, c, a, ct = get_1_article_content(url)
         i = df.shape[0]
-        df.loc[i+1] = [s, u, d, t, ti, su, c, a, ct]
+        if d != "":
+            df.loc[i+1] = [s, u, d, t, ti, su, c, a, ct]
 
     return(df)
     
