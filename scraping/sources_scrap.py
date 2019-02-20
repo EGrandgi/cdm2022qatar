@@ -137,27 +137,41 @@ urls_list = get_articles_urls()
 # =============================================================================
 #                   Get urls for a specific search - 20 MINUTES
 # =============================================================================
+#coupe du monde 2022 qatar "coupe du monde 2022" site:https://www.20minutes.fr/
+
+def get_articles_urls():
+    urls_list = []
+
+    for i in range(0, 25):
+        url_search = 'https://www.google.com/search?q=coupe+du+monde+2022+qatar+%22coupe+du+monde+2022%22+site:https://www.20minutes.fr/&lr=&hl=fr&as_qdr=all&ei=_U9tXNjSJJXAgweGj7OwBg&start=' + str(i) + '0'
+        soup = create_soup(url_search)
+    
+        for a in soup.find_all('a'):
+            if a.get('href')[:21] == '/url?q=https://www.20':
+                urls_list.append(a.get('href')[7:])
+                
+    return(urls_list)
+    
+urls_list = get_articles_urls()
 
 
-# (pas fini)
+# =============================================================================
+#                   Get urls for a specific search - EUROSPORT
+# =============================================================================
+#coupe du monde 2022 qatar "coupe du monde 2022" site:https://www.eurosport.fr/
 
-#def get_articles_urls():
-#    urls_list = []
-#
-#    for i in range(1, 6):
-#        url_search = 'https://www.20minutes.fr/search?q=coupe+du+monde+2022+qatar'
-#        soup = create_soup(url_search)
-#    
-#        for div in soup.find_all('div'):
-#            for class in div.find_all('div')
-#            url = 'https://www.20minutes.fr' + class.get("gsc-url-top")
-#            urls_list.append(url)
-#                
-#    return(urls_list)
-#    
-#urls_list = get_articles_urls()
-#
-#
-#url = urls_list[4]
-#soup = create_soup(url)
+def get_articles_urls():
+    urls_list = []
+
+    for i in range(0, 15):
+        url_search = 'https://www.google.com/search?q=coupe+du+monde+2022+qatar+%22coupe+du+monde+2022%22+site:https://www.eurosport.fr/&lr=&hl=fr&as_qdr=all&ei=WFFtXPOHE8GxgweRoamYCg&start=' + str(i) + '0'
+        soup = create_soup(url_search)
+    
+        for a in soup.find_all('a'):
+            if a.get('href')[:21] == '/url?q=https://www.eu':
+                urls_list.append(a.get('href')[7:])
+                
+    return(urls_list)
+    
+urls_list = get_articles_urls()
     
