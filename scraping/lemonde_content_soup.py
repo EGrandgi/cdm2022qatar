@@ -48,13 +48,14 @@ def get_articles_urls(nb):
         Prend en entrée le nombre de pages de recherche
         Retourne une liste d'urls d'articles correspondant à la recherche 
         "coupe du monde 2022 qatar" sur le site "Le Monde"   
+        tri par pertinence
         
     """
     
     urls_list = []
 
     for i in range(1, nb+1): #40 pages
-        url_search = 'https://www.lemonde.fr/recherche/?keywords=coupe+du+monde+2022+qatar&page_num=' + str(i) +'&operator=and&exclude_keywords=&qt=recherche_texte_titre&author=&period=since_1944&start_day=01&start_month=01&start_year=1944&end_day=29&end_month=01&end_year=2019&sort=desc'
+        url_search = 'https://www.lemonde.fr/recherche/?keywords=coupe+du+monde+2022+qatar&page_num=' + str(i) +'&operator=and&exclude_keywords=&qt=recherche_texte_titre&author=&period=since_1944&start_day=01&start_month=01&start_year=1944&end_day=29&end_month=01&end_year=2019&sort=pertinence'
         soup = create_soup(url_search)
     
         for h3 in soup.find_all('h3'):
