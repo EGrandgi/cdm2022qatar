@@ -5,7 +5,6 @@ Created on Mon Feb 18 16:59:35 2019
 @author: EGrandgi
 
 =============================COURRIER INTERNATIONAL============================
-/!\ Reste à traiter les exceptions /!\ 
 
 """
 # =============================================================================
@@ -80,24 +79,34 @@ def get_1_article_content(url):
     
     soup = create_soup(url)
     source = "Courrier International"
-    date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "", "article"
+    date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "", ""
    
     try:
+        #content type
+        init = ['u', 'a', 'b', 'd', 'g']
+        t = ['une', 'article', 'breve', 'dessin', 'galerie']
+        for i in range(5):
+            if url[38:39] == init[i]:
+                content_type = t[i]
+                
         #date
         for time_ in soup.find_all('time', itemprop = 'datePublished'):
             date = time_.get_text()[:10]
             date = dt2.strptime(date, "%d/%m/%Y").strftime("%Y/%m/%d")
         
         #theme
-        for ul in soup.find('ul', class_ = 'breadcrumbs'):
-            for span in ul.find_all('span', itemprop = 'name'):
-                theme += span.get_text() + ', '
+        if content_type != 'dessin':
+            if content_type != 'galerie':
+                for ul in soup.find('ul', class_ = 'breadcrumbs'):
+                    for span in ul.find_all('span', itemprop = 'name'):
+                        theme += span.get_text() + ', '
             
         #title
         title = soup.find('h1', class_ = 'article-title').get_text()
         
         #subtitle
-        subtitle = soup.find('p', class_ = 'article-lede').get_text()
+        if soup.find('p', class_ = 'article-lede') is not None:
+            subtitle = soup.find('p', class_ = 'article-lede').get_text()
                         
         #content
         for div in soup.find_all('div', class_ = 'article-text'):
@@ -109,6 +118,7 @@ def get_1_article_content(url):
             abo = 'non'
         else:
             abo = 'oui'
+        
                     
     except:
         print("Exception : " + url+ "\n")
