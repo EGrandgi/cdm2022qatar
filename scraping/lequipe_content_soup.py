@@ -92,18 +92,6 @@ def get_1_article_content(url):
             theme += span.get_text()[13:] + ', '
             
         #title
-#        if soup.find('h1', class_ = ' title article__titre article__titre--lg') != None:
-#            title = soup.find('h1', class_ = ' title article__titre article__titre--lg').strong.get_text()
-#        else:
-#            if soup.find('h1', class_ = ' title article__titre article__titre--md') != None:
-#                title = soup.find('h1', class_ = ' title article__titre article__titre--md').strong.get_text()
-#            else:
-#                if soup.find('h1', class_ = ' title article__titre article__titre--sm') != None:
-#                    title = soup.find('h1', class_ = ' title article__titre article__titre--sm').strong.get_text()
-#                else:
-#                    for header in soup.find_all('header', class_ = 'article__header js-article__header'):
-#                        title = header.find('h1', itemprop = 'headline').get_text()
-        
         if soup.find('h1').get('class')[2]  == 'article__titre':
             h1 = soup.find('h1')
             title = h1.strong.get_text()
