@@ -3,8 +3,10 @@
 Created on Thu Jan 31 12:09:27 2019
 
 @author: EGrandgi
-"""
 
+==================================LE MONDE=====================================
+
+"""
 # =============================================================================
 #                                 Packages
 # =============================================================================
@@ -61,7 +63,7 @@ def get_articles_urls(nb):
                 urls_list.append(url)
                 
     return(urls_list)
-    
+   
 
 # =============================================================================
 #                       Récupération du contenu des articles
@@ -88,24 +90,24 @@ def get_1_article_content(url):
             i += 1
         date = url[i:i+10]
         
+#        date = soup.find('span', class_ = 'meta__date').get_text()[10:]
+        
         #theme
-        for ul in soup.find_all('ul'):
-            if ul.get("class") == ['breadcrumb']:
-                for a in ul.find_all('a'):
-                    theme += a.get_text() + ","
+        for ul in soup.find_all('ul', class_ = 'breadcrumb'):
+            for a in ul.find_all('a'):
+                theme += a.get_text() + ","
             
         #title
         title = soup.find('title').get_text()
         
         #subtitle
-        for p in soup.find_all('p'):
-            if p.get("class") == ['article__desc']:
-                subtitle = p.get_text()
+        for p in soup.find_all('p', class_ = 'article__desc'):
+            subtitle = p.get_text()
                         
         #content & abo
         for section in soup.find_all('section', class_ = ['article__content', 'old__article-content-single']):
             for p in section.find_all('p'):
-                if p.get("class") == ['article__status']:
+                if p.get("class") == 'article__status':
                     abo += "oui"
                 if p.span is None:
                     content += p.get_text() + " "
