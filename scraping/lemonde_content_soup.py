@@ -176,3 +176,4 @@ if __name__ == '__main__':
     
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
+    
