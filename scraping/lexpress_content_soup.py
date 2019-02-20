@@ -163,7 +163,7 @@ def save_as_json(df, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(5) #récupération des urls des articles
+    urls_list = get_articles_urls(20) #récupération des urls des articles
     df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
