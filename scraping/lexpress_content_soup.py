@@ -3,8 +3,10 @@
 Created on Sat Feb 16 17:44:38 2019
 
 @author: EGrandgi
-"""
 
+=================================L'EXPRESS=====================================
+
+"""
 # =============================================================================
 #                                 Packages
 # =============================================================================
@@ -13,9 +15,10 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import os
-import datetime
 import json
 import time
+import datetime
+from datetime import datetime as dt2
 
 
 # =============================================================================
@@ -83,29 +86,30 @@ def get_1_article_content(url):
     
     try:
         #date
-        for time_ in soup.find_all('time', itemprop = ['datePublished']):
+        for time_ in soup.find_all('time', itemprop = 'datePublished'):
             date = time_.get_text()[9:19]
+            date = dt2.strptime(date, "%d/%m/%Y").strftime("%Y/%m/%d")
 
         #theme      
-        for nav in soup.find_all('nav', class_ = ['breadcrumb']):
+        for nav in soup.find_all('nav', class_ = 'breadcrumb'):
             for li in nav.find_all('li'):
                 theme += li.get_text() + ","
             
         #title
-        title = soup.find('h1', class_ = "title_alpha").get_text()[11:]
+        title = soup.find('h1', class_ = 'title_alpha').get_text()[11:]
         
         #subtitle
-        subtitle = soup.find('h2', class_ = "chapo title_gamma").get_text()[11:]
+        subtitle = soup.find('h2', class_ = 'chapo title_gamma').get_text()[11:]
                         
         #content
-        for div in soup.find_all('div', class_ = ['article_container']):
+        for div in soup.find_all('div', class_ = 'article_container'):
             for p in div.find_all('p'):
                 if p.get('class') is None:
                     content += p.get_text() + " "
                 
         #content type
-        for div in soup.find_all('div', class_ = ['article_header_content']):
-            for p in div.find_all('p', class_ = ['tag_title']):
+        for div in soup.find_all('div', class_ = 'article_header_content'):
+            for p in div.find_all('p', class_ = 'tag_title'):
                 content_type = p.get_text()[28:]
             
                      
