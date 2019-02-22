@@ -6,6 +6,8 @@ algos d'extraction : dossier scraping > fichiers nomsite_content_soup.py
 
 résultats à utiliser pour le nettoyage : dossier scraping > json > fichiers date_nomsite_allarticles.json
 
+pour lire les fichiers json : dossier nettoyage > read_json.py
+
 ### Avancement
 - 20 minutes ==> json OK
 
