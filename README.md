@@ -15,9 +15,11 @@ résultats à utiliser pour le nettoyage : dossier scraping > json > fichiers da
 
 - L'Express ==> json OK
 
-- L'Equipe ==> algo OK mais ne fonctionne pas sur certains articles
+- L'Equipe ==> algo OK mais ne fonctionne pas sur certains articles, correction en cours
 
-- Le Point ==> algo OK mais les 53 pages / 526 articles annoncés sur le site ne sortent pas tous
+- Le Point ==> algo OK mais les 53 pages / 526 articles annoncés sur le site ne sortent pas tous, correction en cours
+
+- Eurosport ==> urls OK, algo extraction en cours
    
    
 ---
