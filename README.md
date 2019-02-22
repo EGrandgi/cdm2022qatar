@@ -6,20 +6,33 @@ algos d'extraction : dossier scraping > fichiers nomsite_content_soup.py
 
 résultats à utiliser pour le nettoyage : dossier scraping > json > fichiers date_nomsite_allarticles.json
 
+### Avancement
+- 20 minutes ==> json OK
 
+- Courrier International ==> json OK
 
+- Le Monde ==> json OK
 
+- L'Express ==> json OK
 
-**Sortie : fichiers .json structurés comme ceci :**
+- L'Equipe ==> algo OK mais ne fonctionne pas sur certains articles
+
+- Le Point ==> algo OK mais les 53 pages / 526 articles annoncés sur le site ne sortent pas tous
+   
+   
+---
+
+     
+**Fichiers .json structurés comme ceci :**
 
 - **dictionnaire avec 9 éléments : source, url, date, theme, title, subtitle, content, abo, content_type**
 
 - **chaque élément est de taille n avec n = nombre d'articles pour un site web donné**
-          
-          
-          
-          
+   
+   
+---
 
+          
 Liste des éléments : 
 
 - source : site web
