@@ -41,15 +41,15 @@ Liste des éléments :
 
 - date : date de publication de l'article - format YYYY/MM/DD
 
-- theme : catégorie(s) de l'article sur le site web - format : différentes catégories déparées par des ","
+- theme : catégorie(s) de l'article sur le site web - format : différentes catégories séparées par des ","
 
 - title : titre de l'article
 
-- subtitle : "chapeau" de l'article : une ou plusieurs phrase d'introduction ou de résumé
+- subtitle : "chapeau" de l'article : une ou plusieurs phrases d'introduction ou de résumé
 
 - content : corps de texte de l'article
 
-- abo : article réservé aux abonnées - format : "oui" ou "non"
+- abo : article réservé aux abonnés - format : "oui" ou "non"
 
 - content_type : sur les sites ayant des types de contenu spéciaux, ex Courrier International : article, une, breve, dessin - par défaut : "article"
 
