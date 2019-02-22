@@ -8,13 +8,14 @@ résultats à utiliser pour le nettoyage : dossier scraping > json > fichiers da
 
 
 
-**Entrée : site web avec recherche**
 
-**Sortie : fichier .json structuré comme ceci :**
+
+**Sortie : fichiers .json structurés comme ceci :**
 
 - **dictionnaire avec 9 éléments : source, url, date, theme, title, subtitle, content, abo, content_type**
 
 - **chaque élément est de taille n avec n = nombre d'articles pour un site web donné**
+          
           
           
           
