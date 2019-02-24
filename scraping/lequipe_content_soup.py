@@ -2,8 +2,6 @@
 """
 Created on Mon Feb 18 16:59:35 2019
 
-@author: EGrandgi
-
 ==================================L'EQUIPE=====================================
 
 """
@@ -18,6 +16,9 @@ import os
 import datetime
 import json
 import time
+from datetime import datetime as dt2
+import locale
+locale.setlocale(locale.LC_TIME,'')
 
 
 # =============================================================================
@@ -48,20 +49,23 @@ def get_articles_urls(nb):
         Prend en entrée le nombre de pages de recherche
         Retourne une liste d'urls d'articles correspondant à la recherche 
         "coupe du monde 2022 qatar" sur le site "l'Equipe"   
+        tri par pertinence
         
     """
     
     urls_list = []
 
     for i in range(1, nb+1):
-        url_search = 'https://www.lequipe.fr/recherche/search.php?r=coupe+du+monde+2022+qatar&jd=01&md=01&ad=2019&jf=01&mf=01&af=2019&t=ALL&adv=0&o=D&s=ALL&s1=efr&p=' + str(i)
+        url_search = 'https://www.lequipe.fr/recherche/search.php?r=coupe+du+monde+2022+qatar&jd=01&md=01&ad=2019&jf=01&mf=01&af=2019&t=ALL&adv=0&o=P&s=ALL&s1=efr&p=' + str(i)
         soup = create_soup(url_search)
     
         for h2 in soup.find_all('h2'):
             for a in h2.find_all('a'):
                 url = 'https://www.lequipe.fr' + a.get("href")
                 urls_list.append(url)
-                            
+    
+    urls_list = list(set(urls_list))  
+                      
     return(urls_list)
 
 
@@ -82,33 +86,56 @@ def get_1_article_content(url):
     date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "", "article"
    
     try:
-        #date (pas ouf)
+        #date
         for div in soup.find_all('div', class_ = 'article__date'):
             date = div.find('time').get_text()
-        
+        if date.find("à") != -1:
+            k = date.find("à") -1
+            date = date[:k]
+        s = ['1er', 'Ã©', 'Ã»', 'janvier', 'février', 'avril', 'juillet', 'septembre', 'octobre', 'novembre', 'décembre']
+        t = ['1', 'é', 'û', 'janv.', 'févr.', 'avr.', 'juil.', 'sept.','oct.', 'nov.', 'déc.']
+        for i in range(11):    
+            date = date.replace(s[i], t[i])
+        date = dt2.strptime(date, "%A %d %b %Y").strftime("%Y/%m/%d")
+            
         #theme
         div = soup.find('div', class_ = 'surtitre article__surtitre')
         for span in div.find_all('span'):
-            theme += span.get_text()[13:] + ', '
+            theme += span.get_text() + ', '
             
         #title
-        if soup.find('h1').get('class')[2]  == 'article__titre':
-            h1 = soup.find('h1')
-            title = h1.strong.get_text()
-        else:
-            for header in soup.find_all('header', class_ = 'article__header js-article__header'):
-                title = header.find('h1', itemprop = 'headline').get_text()        
-                
+        try:
+            if soup.find('h1').get('class')[2]  == 'article__titre':
+                h1 = soup.find('h1')
+                title = h1.strong.get_text()
+            else:
+                for header in soup.find_all('header', class_ = 'article__header js-article__header'):
+                    title = header.find('h1', itemprop = 'headline').get_text()
+        except:
+            title = soup.find('h1', itemprop = 'headline').get_text()
+  
         #subtitle
-        subtitle = soup.find('h2', class_ = 'article__chapeau').get_text()
+        if soup.find('h2', class_ = 'article__chapeau') is not None:
+            subtitle = soup.find('h2', class_ = 'article__chapeau').get_text()
                         
         #content
         for p in soup.find_all('p', class_ = 'article__paragraphe article__paragraphe--last'):
-            content += p.get_text() + " "
+            content += p.get_text()
         if content == "":
             for div in soup.find_all('div', class_ = 'col text'):
                 if div.p.get('class') is None:
                     content += div.p.get_text() + " "
+            if content == "":
+                for p in soup.find_all('p', class_ = 'article__paragraphe'):
+                    content += p.get_text() + ""
+            if content == "":
+                for div in soup.find_all('div', class_ = 'article__paragraphe article__paragraphe--last'):
+                    for p in div.find_all('p'):
+                        content += p.get_text() + ""
+            if content == "":
+                for div in soup.find_all('div', class_ = 'article__paragraphe'):
+                    for p in div.find_all('p'):
+                        content += p.get_text() + ""
         
         #abo        
         if soup.find('div', class_ = 'div-provenance') is None:
@@ -136,7 +163,8 @@ def df_articles_content(urls_list):
     for url in urls_list:
         s, u, d, t, ti, su, c, a, ct = get_1_article_content(url)
         i = df.shape[0]
-        df.loc[i+1] = [s, u, d, t, ti, su, c, a, ct]
+        if d != "":
+            df.loc[i+1] = [s, u, d, t, ti, su, c, a, ct]
 
     return(df)
     
