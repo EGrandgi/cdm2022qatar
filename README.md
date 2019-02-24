@@ -8,22 +8,7 @@ résultats à utiliser pour le nettoyage : dossier scraping > json > fichiers da
 
 pour lire les fichiers json : dossier nettoyage > read_json.py
 
-### Avancement
-- 20 minutes ==> json OK
 
-- Courrier International ==> json OK
-
-- Le Monde ==> json OK
-
-- L'Express ==> json OK
-
-- L'Equipe ==> algo OK mais ne fonctionne pas sur certains articles, correction en cours
-
-- Le Point ==> algo OK mais les 53 pages / 526 articles annoncés sur le site ne sortent pas tous, correction en cours
-
-- Eurosport ==> urls OK, algo extraction en cours
-   
-   
 ---
 
      
