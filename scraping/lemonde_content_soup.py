@@ -2,8 +2,6 @@
 """
 Created on Thu Jan 31 12:09:27 2019
 
-@author: EGrandgi
-
 ==================================LE MONDE=====================================
 
 """
@@ -176,4 +174,3 @@ if __name__ == '__main__':
     
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
-    
