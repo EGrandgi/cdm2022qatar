@@ -174,4 +174,76 @@ def get_articles_urls():
     return(urls_list)
     
 urls_list = get_articles_urls()
+
+
+# =============================================================================
+#                   Get urls for a specific search - RMCSPORT
+# =============================================================================
+#coupe du monde 2022 qatar site:https://rmcsport.bfmtv.com
+
+def get_articles_urls():
+    urls_list = []
+
+    for i in range(0, 5):
+        url_search = 'https://www.google.com/search?q=coupe+du+monde+2022+qatar+%22coupe+du+monde+2022%22+site:https://rmcsport.bfmtv.com&ei=gIdwXPf4I5OFjLsPgMSR4AI&start=' + str(i) + '0'
+        soup = create_soup(url_search)
     
+        for a in soup.find_all('a'):
+            if a.get('href')[:21] == '/url?q=https://rmcspo':
+                url = a.get('href')[7:]
+                i = url.find('html')
+                k = url.find('mediaplayer')
+                if i != -1 and k == -1:
+                    url = url[:i+4]
+                    urls_list.append(url)
+    
+    urls_list = list(set(urls_list))  
+                        
+    return(urls_list)
+
+urls_list = get_articles_urls()
+
+
+# =============================================================================
+#                  Get urls for a specific search - FOOTBALL365
+# =============================================================================
+#"coupe du monde 2022 qatar"
+
+def get_articles_urls():
+    urls_list = []
+
+    for i in range(1, 5):
+        url_search = 'http://www.football365.fr/page/' + str(i) + '?s=coupe+du+monde+2022+qatar'
+        soup = create_soup(url_search)
+        div = soup.find('div', class_ = 'row items-posts')
+        for a in div.find_all('a', class_ = 'new_tab_link hidden-xs'):
+            url = a.get('data-href')
+            urls_list.append(url)
+                            
+    return(urls_list)
+
+urls_list = get_articles_urls()
+
+
+# =============================================================================
+#                Get urls for a specific search - FRANCEFOOTBALL
+# =============================================================================
+#coupe du monde 2022 qatar "coupe du monde 2022 qatar "coupe du monde 2022" site:https://www.francefootball.fr"
+
+def get_articles_urls():
+    urls_list = []
+
+    for i in range(0, 5):
+        url_search = 'https://www.google.fr/search?q=coupe+du+monde+2022+qatar+%22coupe+du+monde+2022%22+site:https://www.francefootball.fr&ei=n4xwXJiZMK3PrgTw1oHoCg&start=' + str(i) + '0'
+        soup = create_soup(url_search)
+    
+        for a in soup.find_all('a'):
+            if a.get('href')[:21] == '/url?q=https://www.fr':
+                url = a.get('href')[7:]
+                k = url.find('&')
+                url = url[:k]
+                urls_list.append(url)
+                            
+    return(urls_list)
+
+urls_list = get_articles_urls()
