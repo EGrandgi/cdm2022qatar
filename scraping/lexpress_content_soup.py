@@ -2,8 +2,6 @@
 """
 Created on Sat Feb 16 17:44:38 2019
 
-@author: EGrandgi
-
 =================================L'EXPRESS=====================================
 
 """
@@ -44,12 +42,12 @@ def create_soup(url):
 # =============================================================================
     
     
-def get_articles_urls(nb):
+def get_articles_urls(nb, nb_):
     
     """ 
         Prend en entrée le nombre de pages de recherche
-        Retourne une liste d'urls d'articles correspondant à la recherche 
-        "coupe du monde 2022 qatar" sur le site "L'Express"   
+        Retourne une liste d'urls d'articles correspondant aux recherches 
+        "coupe du monde 2022 qatar" et "Mondial-2022" sur le site "L'Express"   
         
     """
     
@@ -64,6 +62,18 @@ def get_articles_urls(nb):
                     for a in div.find_all('a'):
                         url = a.get("href")
                         urls_list.append(url)
+                        
+    for i in range(1, nb_+1):
+        url_search = 'https://www.lexpress.fr/recherche?q=Mondial-2022&p=' + str(i)
+        soup = create_soup(url_search)
+        for div in soup.find_all('div'):
+            if (div.get("class")!=None):
+                if "img_container" in div.get("class"):
+                    for a in div.find_all('a'):
+                        url = a.get("href")
+                        urls_list.append(url)
+                        
+    urls_list = list(set(urls_list))
                 
     return(urls_list)
     
@@ -163,7 +173,7 @@ def save_as_json(df, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(20) #récupération des urls des articles
+    urls_list = get_articles_urls(20, 5) #récupération des urls des articles
     df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
