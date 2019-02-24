@@ -2,8 +2,6 @@
 """
 Created on Mon Feb 18 21:47:09 2019
 
-@author: EGrandgi
-
 ==================================20 MINUTES===================================
 
 """
@@ -95,15 +93,20 @@ def get_1_article_content(url):
         title = soup.find('h1', class_ = 'nodeheader-title').get_text()
         
         #subtitle
-        subtitle = soup.find('span', class_ = 'hat-summary').get_text()
+        if soup.find('span', class_ = 'hat-summary') is not None:
+            subtitle = soup.find('span', class_ = 'hat-summary').get_text()
                         
         #content
         div = soup.find('div', class_ = 'lt-endor-body content')
         for p in div.find_all('p'):
            if p.find_parent('blockquote', class_ = "twitter-tweet") is None:
                content += p.get_text() + " "
-        
-        
+               
+        #content_type
+        if title[:5] == 'VIDEO':
+            content_type = 'video'
+               
+                    
     except:
         print("Exception : " + url+ "\n")
             
