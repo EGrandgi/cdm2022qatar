@@ -2,8 +2,6 @@
 """
 Created on Mon Feb 18 21:47:09 2019
 
-@author: EGrandgi
-
 ==================================LE POINT=====================================
 
 """
@@ -66,7 +64,8 @@ def get_articles_urls(nb):
                             url = 'https://www.lepoint.fr' + a.get("href")
                             if url[:23] != 'https://www.lepoint.frh' and len(url) > 80:
                                 urls_list.append(url)
-                            
+    
+    urls_list = list(set(urls_list))                        
     return(urls_list)
     
 
@@ -98,16 +97,21 @@ def get_1_article_content(url):
                 theme += a.get_text()[1:] + ','
             
         #title
-        title = soup.find('h1', class_ = 'art-titre list-view').get_text()[1:]
+        if soup.find('h1', class_ = 'art-titre list-view') is not None:
+            title = soup.find('h1', class_ = 'art-titre list-view').get_text()[1:]
         
         #subtitle
         if soup.find('h2', class_ = 'art-chapeau') is not None:
             subtitle = soup.find('h2', class_ = 'art-chapeau').get_text()[1:]
                         
-        #content (3 lignes à enlever à la fin)
+        #content
         for div in soup.find_all('div', class_ = 'art-text'):
             for p in div.find_all('p'):
-                content += p.get_text() + " "
+                p = p.get_text()
+                if p.find("©") != -1 and p.find("(") != -1 and p.find("/") != -1 and p.find(":") != -1:
+                    content += ""
+                else:
+                    content += p + " "
         
         #abo        
         if soup.find('aside', id = 'article-reserve-aux-abonnes') is None:
@@ -165,7 +169,7 @@ def save_as_json(df, path, filename):
 if __name__ == '__main__':
     tps_s = time.perf_counter()
     
-    urls_list = get_articles_urls(53) #récupération des urls des articles
+    urls_list = get_articles_urls(53) #récupération des urls des articles 13
     df = df_articles_content(urls_list) #récupéation du contenu des articles, stockage dans un dataframe
     
     path = os.getcwd()
