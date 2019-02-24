@@ -2,8 +2,6 @@
 """
 Created on Mon Feb 18 16:59:35 2019
 
-@author: EGrandgi
-
 =============================COURRIER INTERNATIONAL============================
 
 """
@@ -180,4 +178,3 @@ if __name__ == '__main__':
     
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" %(tps_e-tps_s))
- 
