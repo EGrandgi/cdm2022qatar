@@ -66,11 +66,13 @@ def results_into_df(results):
         except:
             ""
     
-    except_ = [84, 122, 134, 135, 137, 138, 146, 149, 202, 207, 209]
+    except_ = [14, 39, 68, 84, 122, 130, 134, 135, 137, 138, 146, 149, 189, 202, 207, 209]
     for e in except_:
         df = df.drop(e)
     
     df.reset_index(drop=True, inplace=True)
+    
+    df.loc[11]['continent']= 'Océanie'
     
     return df
 
