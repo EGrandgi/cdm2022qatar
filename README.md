@@ -5,7 +5,7 @@
 
 - SCRAPING ==> ok
 
-- **LISTE PERSONNES, STADES, PAYS ==> en cours**
+- **LISTE PERSONNES CONCERNEES (???)**
 
 - **NETTOYAGE ==> en cours**
 
