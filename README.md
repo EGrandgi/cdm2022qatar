@@ -3,7 +3,7 @@
      
 ## Tâches
 
-- **SCRAPING ==> ok**
+- SCRAPING ==> ok
 
 - **LISTE PERSONNES, STADES, PAYS ==> en cours**
 
@@ -15,9 +15,9 @@
 
 - **CREATION BD ==> à faire**
 
-- **INSERTION BD ==> à faire*
+- INSERTION BD ==> à faire
 
-- **REQUETES ==> à faire**
+- REQUETES ==> à faire
 
-- **ANALYSES ==> à faire**
+- ANALYSES ==> à faire
 
