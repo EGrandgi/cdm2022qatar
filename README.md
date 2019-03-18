@@ -3,22 +3,14 @@
      
 ## Tâches
 
-- SCRAPING ==> ok
+- SCRAPING ==> ok (sortie : json)
 
-- **LISTE PERSONNES CONCERNEES (???)**
+- NETTOYAGE ==> ok (sortie : csv à insérer dans BD)
 
-- **NETTOYAGE ==> en cours**
+- CREATION ET INSERTION BD ==> ok (sur Oracle SQL Developer)
 
-- **SCHEMA BD ==> en cours**
+- REQUETES SQL ==> à faire
 
-- **PREPARATION DES DONNES POUR INSERTION DANS BD ==> à faire**
-
-- **CREATION BD ==> à faire**
-
-- INSERTION BD ==> à faire
-
-- REQUETES ==> à faire
-
-- ANALYSES ==> à faire
+- TRAITEMENTS PYTHON ==> à faire (tf-idf, positif/négatif, nuages de mots...)
 
 - **RAPPORT ==> en cours**
