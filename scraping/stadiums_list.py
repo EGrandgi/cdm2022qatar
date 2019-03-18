@@ -8,9 +8,9 @@ Created on Fri Mar  8 18:42:28 2019
 #                                 Packages
 # =============================================================================
 
-import json
 import os
 import datetime
+import pandas as pd
 
 
 # =============================================================================
@@ -21,7 +21,7 @@ stadiums_dict = {'city':{1:'Lusail',
                          2:'Doha',
                          3:'Doha',
                          4:'Doha',
-                         5:'Al_Khor',
+                         5:'Al Khor',
                          6:'Ash Shamal',
                          7:'Al Wakrah',
                          8:'Umm Salal',
@@ -65,32 +65,18 @@ stadiums_dict = {'city':{1:'Lusail',
                           10:'a_agrandir',
                           11:'a_agrandir',
                           12:'a_construire'}}
+                
+df = pd.DataFrame.from_dict(stadiums_dict)
 
-
-# =============================================================================
-#                               Convertir en json
-# =============================================================================
-
-def save_as_json(dict_, path, filename):
-
-    """
-        Entrée : dictionnaire
-        Sortie : fichier json avec le contenu du dictionnaire
-         
-    """
-        
-    with open('{}\\data\\{}.json'.format(path, filename), 'w') as outfile:
-        outfile.write(json.dumps(dict_, ensure_ascii = True, indent = 4))
-        
       
 # =============================================================================
-#                                Exécution
+#                            Sauvegarde en csv
 # =============================================================================
         
 if __name__ == '__main__':
 
-    path = os.getcwd()
+    path = os.getcwd() + '\\data\\'
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + "_stadiums_info"
-    save_as_json(stadiums_dict, path, filename)
+    filename = now[:10] + "_stadiums_list.csv"
+    df.to_csv(path + filename, encoding='utf-8', index=True, sep=';')
 

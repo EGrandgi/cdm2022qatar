@@ -10,7 +10,6 @@ Created on Fri Mar  8 18:42:28 2019
 
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pandas as pd
-import json
 import os
 import datetime
 
@@ -66,9 +65,12 @@ def results_into_df(results):
         except:
             ""
     
-    except_ = [14, 39, 68, 84, 122, 130, 134, 135, 137, 138, 146, 149, 189, 202, 207, 209]
+    except_ = [14, 39, 68, 84, 122, 130, 134, 135, 137, 138, 146, 149, 189, 202, 207]
     for e in except_:
         df = df.drop(e)
+    
+    df.loc[209]['country']= 'Palestine'
+    df.loc[209]['continent']= 'Asie'
     
     df.reset_index(drop=True, inplace=True)
     
@@ -76,28 +78,16 @@ def results_into_df(results):
     
     return df
 
-
-def save_as_json(df, path, filename):
-
-    """
-        Entrée : dataframe
-        Sortie : fichier json avec le contenu du dataframe
-         
-    """
-    
-    data = df.to_dict()
-    
-    with open('{}\\data\\{}.json'.format(path, filename), 'w') as outfile:
-        outfile.write(json.dumps(data, ensure_ascii = True, indent = 4))
         
-        
+# =============================================================================
+#                        Exécution et sauvegarde en csv
+# =============================================================================
         
 if __name__ == '__main__':
 
     results = SPARQL_exec()
     df = results_into_df(results)
-    path = os.getcwd()
+    path = os.getcwd() + '\\data\\'
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + "_countries_list"
-    save_as_json(df, path, filename)
-
+    filename = now[:10] + "_countries_list.csv"
+    df.to_csv(path + filename, encoding='utf-8', index=True, sep=';')

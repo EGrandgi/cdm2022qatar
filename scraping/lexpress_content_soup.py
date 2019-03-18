@@ -92,7 +92,7 @@ def get_1_article_content(url):
     
     soup = create_soup(url)
     source = "LExpress"
-    date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "non", ""
+    date, theme, title, subtitle, content, abo, content_type = "", "", "", "", "", "non", "article"
     
     try:
         #date
@@ -116,12 +116,7 @@ def get_1_article_content(url):
             for p in div.find_all('p'):
                 if p.get('class') is None:
                     content += p.get_text() + " "
-                
-        #content type
-        for div in soup.find_all('div', class_ = 'article_header_content'):
-            for p in div.find_all('p', class_ = 'tag_title'):
-                content_type = p.get_text()[28:]
-            
+                    
                      
     except:
         print("Exception : " + url+ "\n")
