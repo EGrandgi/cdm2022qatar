@@ -1,0 +1,198 @@
+id_country;country;continent
+0;Afghanistan;Asie
+1;Afrique du Sud;Afrique
+2;Albanie;Europe
+3;Algerie;Afrique
+4;Allemagne;Europe
+5;Andorre;Europe
+6;Angola;Afrique
+7;Antigua-et-Barbuda;Amerique du Nord
+8;Arabie saoudite;Asie
+9;Argentine;Amerique du Sud
+10;Armenie;Asie
+11;Australie;Oceanie
+12;Autriche;Europe
+13;Azerbaidjan;Asie
+14;Bahamas;Amerique du Nord
+15;Bahrein;Asie
+16;Bangladesh;Asie
+17;Barbade;Amerique du Nord
+18;Belgique;Europe
+19;Belize;Amerique du Nord
+20;Bhoutan;Asie
+21;Birmanie;Asie
+22;Bielorussie;Europe
+23;Bolivie;Amerique du Sud
+24;Bosnie-Herzegovine;Europe
+25;Botswana;Afrique
+26;Brunei;Asie
+27;Bresil;Amerique du Sud
+28;Bulgarie;Europe
+29;Burkina Faso;Afrique
+30;Burundi;Afrique
+31;Benin;Afrique
+32;Cambodge;Asie
+33;Cameroun;Afrique
+34;Canada;Amerique du Nord
+35;Cap-Vert;Afrique
+36;Chili;Amerique du Sud
+37;Chypre;Asie
+38;Colombie;Amerique
+39;Comores;Afrique
+40;Coree du Nord;Asie
+41;Coree du Sud;Asie
+42;Costa Rica;Amerique du Nord
+43;Croatie;Europe
+44;Cuba;Amerique du Nord
+45;Cote d'Ivoire;Afrique
+46;Danemark;Europe
+47;Djibouti;Afrique
+48;Dominique;Amerique du Nord
+49;Espagne;Europe
+50;Estonie;Europe
+51;Eswatini;Afrique
+52;Fidji;Oceanie
+53;Finlande;Europe
+54;France;Europe
+55;Gabon;Afrique
+56;Gambie;Afrique
+57;Ghana;Afrique
+58;Grenade;Amerique du Nord
+59;Grece;Europe
+60;Guatemala;Amerique du Nord
+61;Guinee;Afrique
+62;Guinee Equatoriale;Afrique
+63;Guinee-Bissau;Afrique
+64;Guyana;Amerique du Sud
+65;Georgie;Asie
+66;Haiti;Amerique du Nord
+67;Honduras;Amerique du Nord
+68;Hongrie;Europe
+69;Inde;Asie
+70;Indonesie;Asie
+71;Irak;Asie
+72;Iran;Asie
+73;Irlande;Europe
+74;Islande;Europe
+75;Israel;Asie
+76;Italie;Europe
+77;Jamaique;Amerique du Nord
+78;Japon;Asie
+79;Jordanie;Asie
+80;Kazakhstan;Asie
+81;Kenya;Afrique
+82;Kirghizistan;Asie
+83;Kiribati;Oceanie
+84;Koweit;Asie
+85;Laos;Asie
+86;Lesotho;Afrique
+87;Lettonie;Europe
+88;Liban;Asie
+89;Liberia;Afrique
+90;Libye;Afrique
+91;Liechtenstein;Europe
+92;Lituanie;Europe
+93;Luxembourg;Europe
+94;Macedoine du Nord;Europe
+95;Madagascar;Afrique
+96;Malaisie;Asie
+97;Malawi;Afrique
+98;Maldives;Asie
+99;Mali;Afrique
+100;Malte;Europe
+101;Maroc;Afrique
+102;Maurice;Afrique
+103;Mauritanie;Afrique
+104;Mexique;Amerique du Nord
+105;Moldavie;Europe
+106;Monaco;Europe
+107;Mongolie;Asie
+108;Montenegro;Europe
+109;Mozambique;Afrique
+110;Namibie;Afrique
+111;Nauru;Oceanie
+112;Nicaragua;Amerique du Nord
+113;Niger;Afrique
+114;Nigeria;Afrique
+115;Niue;Oceanie
+116;Norvege;Europe
+117;Nouvelle-Zelande;Oceanie
+118;Nepal;Asie
+119;Oman;Asie
+120;Ouganda;Afrique
+121;Ouzbekistan;Asie
+122;Pakistan;Asie
+123;Palaos;Oceanie
+124;Panama;Amerique du Nord
+125;Papouasie-Nouvelle-Guinee;Oceanie
+126;Paraguay;Amerique du Sud
+127;Pays-Bas;Europe
+128;Philippines;Asie
+129;Pologne;Europe
+130;Portugal;Europe
+131;Perou;Amerique du Sud
+132;Qatar;Asie
+133;Roumanie;Europe
+134;Royaume du Danemark;Europe
+135;Royaume-Uni;Europe
+136;Russie;Europe
+137;Rwanda;Afrique
+138;Republique centrafricaine;Afrique
+139;Republique dominicaine;Amerique du Nord
+140;Republique du Congo;Afrique
+141;Republique democratique du Congo;Afrique
+142;Republique populaire de Chine;Asie
+143;Republique tcheque;Europe
+144;Saint-Christophe-et-Nieves;Amerique du Nord
+145;Saint-Marin;Europe
+146;Saint-Vincent-et-les-Grenadines;Amerique du Sud
+147;Sainte-Lucie;Amerique du Nord
+148;Salvador;Amerique du Nord
+149;Samoa;Oceanie
+150;Sao Tome-et-Principe;Afrique
+151;Serbie;Europe
+152;Seychelles;Afrique
+153;Sierra Leone;Afrique
+154;Singapour;Asie
+155;Slovaquie;Europe
+156;Slovenie;Europe
+157;Somalie;Afrique
+158;Soudan;Afrique
+159;Soudan du Sud;Afrique
+160;Sri Lanka;Asie
+161;Suisse;Europe
+162;Suriname;Amerique du Sud
+163;Suede;Europe
+164;Syrie;Asie
+165;Senegal;Afrique
+166;Tadjikistan;Asie
+167;Tanzanie;Afrique
+168;Tchad;Afrique
+169;Thailande;Asie
+170;Timor oriental;Asie
+171;Togo;Afrique
+172;Tonga;Oceanie
+173;Trinite-et-Tobago;Amerique du Sud
+174;Tunisie;Afrique
+175;Turkmenistan;Asie
+176;Turquie;Asie
+177;Tuvalu;Oceanie
+178;Ukraine;Europe
+179;Uruguay;Amerique du Sud
+180;Vanuatu;Oceanie
+181;Vatican;Europe
+182;Venezuela;Amerique du Sud
+183;Viet Nam;Asie
+184;Yemen;Asie
+185;Zambie;Afrique
+186;Zimbabwe;Afrique
+187;Egypte;Afrique
+188;Emirats arabes unis;Asie
+189;Equateur;Amerique du Sud
+190;Erythree;Afrique
+191;Etats federes de Micronesie;Oceanie
+192;Etats-Unis;Amerique du Nord
+193;Palestine;Asie
+194;Ethiopie;Afrique
+195;Iles Salomon;Oceanie
+196;Iles Marshall;Oceanie

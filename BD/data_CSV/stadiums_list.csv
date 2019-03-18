@@ -1,0 +1,13 @@
+id_stadium;city;stadium;capacity;status
+0;Lusail;Lusail_IconicStadium;86250;a_construire
+1;Doha;Khalifa_International_Stadium;40000;renove
+2;Doha;Sports_City_Stadium;47560;a_construire
+3;Doha;Education_City_Stadium;45350;a_construire
+4;Al_Khor;Al-Khawr_Stadium;45330;a_construire
+5;Ash_Shamal;Ash_Shamal_Stadium;45120;a_construire
+6;Al_Wakrah;Al-Wakrah_Stadium;45120;a_construire
+7;Umm_Salal;Umm_Salal_Stadium;45120;a_construire
+8;Doha;Doha_Port_Stadium;44950;a_construire
+9;Doha;Stade_Thani_bin_Jassim;44740;a_agrandir
+10;Al_Rayyan;Stade_Ahmed_bin_Ali;44740;a_agrandir
+11;Doha;Qatar_University_Stadium;43520;a_construire
