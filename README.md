@@ -11,6 +11,6 @@
 
 - REQUETES SQL ==> à faire
 
-- TRAITEMENTS PYTHON ==> à faire (tf-idf, positif/négatif, nuages de mots...)
+- TRAITEMENTS PYTHON ==> ok
 
 - **RAPPORT ==> en cours**
