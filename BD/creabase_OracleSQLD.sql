@@ -17,9 +17,9 @@ DROP TABLE ARTICLES;
 -- 														Table COUNTRIES
 ------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE COUNTRIES(
-	id_country       VARCHAR(5),
-	country          VARCHAR(40),
-	continent        VARCHAR(16),
+	id_country       			VARCHAR(5),
+	country       				VARCHAR(40),
+	continent				VARCHAR(16),
 
 	CONSTRAINT PK_CONSTRAINT_COUNTRIES PRIMARY KEY (id_country)
 );
@@ -28,8 +28,8 @@ CREATE TABLE COUNTRIES(
 -- 														Table PERSONS
 ------------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE PERSONS(
-	id_pers				VARCHAR(5),
-	pers				VARCHAR(30),
+	id_pers					VARCHAR(5),
+	pers					VARCHAR(30),
 
 	CONSTRAINT PK_CONSTRAINT_PERSONS PRIMARY KEY (id_pers)
 );
@@ -42,7 +42,7 @@ CREATE TABLE PLACES(
 	stadium					VARCHAR(50),
 	city					VARCHAR(20),
 	capacity_				VARCHAR(10),
-	status_					VARCHAR(15),
+	status_					VARCHAR(20),
 
 	CONSTRAINT PK_CONSTRAINT_PLACES PRIMARY KEY (id_stadium)
 );
@@ -66,12 +66,12 @@ CREATE TABLE ARTICLES(
 	id_article				VARCHAR(5),
 	date_					VARCHAR(10),
 	source_					VARCHAR(30),
-	url						VARCHAR(300),
+	url_					VARCHAR(300),
 	title					VARCHAR(200),
 	subtitle				VARCHAR(1000),
-    content_cut             VARCHAR(4000), 
-	abo						VARCHAR(3),
-	content_type			VARCHAR(15),
+    	content_cut     		        VARCHAR(4000), 
+	abo					VARCHAR(3),
+	content_type				VARCHAR(15),
 	theme					VARCHAR(1000),
 	
 	CONSTRAINT PK_CONSTRAINT_ARTICLES PRIMARY KEY (id_article)
