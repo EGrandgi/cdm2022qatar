@@ -5,7 +5,7 @@ Created on Fri Mar 15 16:11:08 2019
 """
 
 # =============================================================================
-#                                 Packages
+#                                 Packages & stopwords
 # =============================================================================
 
 import pandas as pd
@@ -21,8 +21,12 @@ nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 stop_words = stopwords.words('french')
-stop_words.extend(['from', 'subject', 're', 'edu', 'use'])
-
+path = 'C:\\Users\\Etudiant\\data\\'
+df_addstops = pd.DataFrame.from_csv(path + 'add_stops.csv', sep=';')
+to_add = df_addstops['add_stops'].values.tolist()
+to_add = [re.sub(' ', '', word) for word in to_add]
+stop_words.extend(to_add)
+stop_words.sort()
 
 # =============================================================================
 #                        Tokenize words & clean-up text
@@ -58,10 +62,11 @@ def clean_theme(df):
         del theme[-1]
         theme = basic_cleaner(theme)
         theme = str(theme).strip('[]')
+        theme = theme.replace("'", '')
         df.theme[i] = theme
 
 # =============================================================================
-#               Create Bigram Model, Remove Stopwords, Make Bigrams
+#    Create Bigram Model, Remove Stopwords, Replace Bigrams and Lemmatize
 # =============================================================================
 
 """
@@ -80,8 +85,6 @@ def remove_stopwords(texts):
 
 def make_bigrams(texts, bigram_mod):
     return [bigram_mod[doc] for doc in texts]
-
-nlp = spacy.load('fr', disable=['parser', 'ner'])
 
 
 # =============================================================================
@@ -179,18 +182,21 @@ df_articles_stadiums = pd.DataFrame(columns=['id_article', 'id_stadium'])
 
 types = ['title_data_words_bigrams', 'subtitle_data_words_bigrams', 'content_data_words_bigrams']
 
-for t in types:
-    for k in range(len(t)):
-        for i in range(len(persons_list)):
-            if persons_list[i] in t[k]:
-                L = df_articles_persons.shape[0]
-                df_articles_persons.loc[L+1] = [k, i]
+for k in range(len(content_data_words_bigrams)):
+    for i in range(len(persons_list)):
+        if persons_list[i] in content_data_words_bigrams[k]:
+            L = df_articles_persons.shape[0]
+            df_articles_persons.loc[L+1] = [k, i]
+            
+for k in range(len(content_data_words_bigrams)):
+    for i in range(len(stadiums_list)):
+        if stadiums_list[i] in content_data_words_bigrams[k]:
+            L = df_articles_stadiums.shape[0]
+            df_articles_stadiums.loc[L+1] = [k, i]
                 
-    for k in range(len(t)):
-        for i in range(len(stadiums_list)):
-            if stadiums_list[i] in t[k]:
-                L = df_articles_stadiums.shape[0]
-                df_articles_stadiums.loc[L+1] = [k, i]
+title_data_words_bigrams = [re.sub("'", "", i) for i in title_data_words_bigrams]
+subtitle_data_words_bigrams = [re.sub("'", "", i) for i in subtitle_data_words_bigrams]
+content_data_words_bigrams = [re.sub("'", "", i) for i in content_data_words_bigrams]
 
 
 # =============================================================================
