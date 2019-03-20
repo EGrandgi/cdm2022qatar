@@ -3,9 +3,9 @@
      
 ## Tâches
 
-- SCRAPING ==> ok (sortie : json)
+- SCRAPING ==> ok
 
-- NETTOYAGE ==> ok (sortie : csv à insérer dans BD)
+- NETTOYAGE ==> ok
 
 - CREATION ET INSERTION BD ==> ok (sur Oracle SQL Developer)
 
