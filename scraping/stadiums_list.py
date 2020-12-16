@@ -5,11 +5,9 @@ Created on Fri Mar  8 18:42:28 2019
 """
 
 
-
 import os
 import datetime
 import pandas as pd
-
 
 
 # =============================================================================
@@ -69,14 +67,13 @@ stadiums_dict = {'city': {1: 'Lusail',
 df = pd.DataFrame.from_dict(stadiums_dict)
 
 
-
 # =============================================================================
 #                            Sauvegarde en csv
 # =============================================================================
 
 if __name__ == '__main__':
 
-    path = os.getcwd() + '/data/'
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + '_stadiums_list.csv'
-    df.to_csv(path + filename, encoding='utf-8', index=True, sep=';')
+    filename = f'{now[:10]}_stadiums_list.csv'
+    df.to_csv(os.path.join(os.path.abspath('..'), 'data', filename),
+              encoding='utf-8', index=True, sep=';')

@@ -5,12 +5,10 @@ Created on Fri Mar  8 18:42:28 2019
 """
 
 
-
 from SPARQLWrapper import SPARQLWrapper, JSON
 import pandas as pd
 import os
 import datetime
-
 
 
 # =============================================================================
@@ -77,17 +75,15 @@ def results_into_df(results):
     return df
 
 
-
 # =============================================================================
 #                        Exécution et sauvegarde en csv
 # =============================================================================
-
 
 if __name__ == '__main__':
 
     results = SPARQL_exec()
     df = results_into_df(results)
-    path = os.getcwd() + '/data/'
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + '_countries_list.csv'
-    df.to_csv(path + filename, encoding='utf-8', index=True, sep=';')
+    filename = f'{now[:10]}_countries_list.csv'
+    df.to_csv(os.path.join(os.path.abspath('..'), 'data', filename),
+              encoding='utf-8', index=True, sep=';')

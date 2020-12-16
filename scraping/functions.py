@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 import requests
 
 
-
 # =============================================================================
 #                     Récupération du code source d'une page
 # =============================================================================
@@ -28,7 +27,6 @@ def create_soup(url):
     return(soup)
 
 
-
 # =============================================================================
 #                              Sauvegarde en json
 # =============================================================================
@@ -43,5 +41,5 @@ def save_as_json(df, path, filename):
 
     data = df.to_dict()
 
-    with open('{}/data/{}.json'.format(path, filename), 'w') as outfile:
+    with open(os.path.join(path, 'data', f'{filename}.json'), 'w') as outfile:
         outfile.write(json.dumps(data, ensure_ascii=True, indent=4))

@@ -18,7 +18,6 @@ from datetime import datetime as dt2
 %run functions.py
 
 
-
 # =============================================================================
 #             Récupération des URLs d'une recherche sur L'Express
 # =============================================================================
@@ -124,11 +123,9 @@ def df_articles_content(urls_list):
     return(df)
 
 
-        
 # =============================================================================
 #                             Exécution des fonctions
 # =============================================================================
-
 
 if __name__ == '__main__':
     tps_s = time.perf_counter()
@@ -137,11 +134,10 @@ if __name__ == '__main__':
     # récupéation du contenu des articles, stockage dans un dataframe
     df = df_articles_content(urls_list)
 
-    path = os.getcwd()
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + '_all_articles_lexpress'
+    filename = f'{now[:10]}_all_articles_lexpress'
     # sauvegarde en json du contenu des articles
-    save_as_json(df, path, filename)
+    save_as_json(df, '', filename)
 
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" % (tps_e - tps_s))

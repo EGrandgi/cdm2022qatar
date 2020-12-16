@@ -20,7 +20,6 @@ locale.setlocale(locale.LC_TIME, '')
 %run functions.py
 
 
-
 # =============================================================================
 #             Récupération des URLs d'une recherche sur France Football
 # =============================================================================
@@ -49,7 +48,6 @@ def get_articles_urls(nb):
                 urls_list.append(url)
 
     return(urls_list)
-
 
 
 # =============================================================================
@@ -124,12 +122,10 @@ def df_articles_content(urls_list):
 
     return(df)
 
-    
 
 # =============================================================================
 #                             Exécution des fonctions
 # =============================================================================
-
 
 if __name__ == '__main__':
     tps_s = time.perf_counter()
@@ -138,11 +134,10 @@ if __name__ == '__main__':
     # récupéation du contenu des articles, stockage dans un dataframe
     df = df_articles_content(urls_list)
 
-    path = os.getcwd()
     now = datetime.datetime.now().isoformat()
-    filename = now[:10] + '_all_articles_francefootball'
+    filename = f'{now[:10]}_all_articles_francefootball'
     # sauvegarde en json du contenu des articles
-    save_as_json(df, path, filename)
+    save_as_json(df, '', filename)
 
     tps_e = time.perf_counter()
     print("Temps d'execution (secondes) = %d\n" % (tps_e - tps_s))
